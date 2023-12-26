@@ -8,7 +8,7 @@ printf %s "<html>
   <head>
   </head>
   <body>
-    Holberton School
+    <h1>ALX School</h1>
   </body>
 </html>" > /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
