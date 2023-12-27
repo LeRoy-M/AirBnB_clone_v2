@@ -17,6 +17,7 @@ def do_pack():
         return filename
     return None
 
+
 def deploy():
     """Function that creates and distributes the archive package"""
     archive_path = do_pack()
