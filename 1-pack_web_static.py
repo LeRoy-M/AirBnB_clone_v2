@@ -10,7 +10,8 @@ from os.path import isdir
 def do_pack():
     """Function that generates a `.tgz` archive"""
     date_t = datetime.now().strftime("%Y%m%d%H%M%S")
-    local("mkdir -p versions")
+    if isdir("versions") is False:
+        local("mkdir versions")
     filename = f"versions/web_static_{date_t}.tgz"
     local(f"tar -cvzf (filename) web_static")
     if filename:
