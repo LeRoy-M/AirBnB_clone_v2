@@ -3,12 +3,15 @@
 archived package to the web servers, using `Fabric`
 """
 from fabric.api import env, put, run
-from os import symlink
+from os import path.exists, symlink
 env.hosts = ["54.236.43.83", "54.164.92.21"]
+# env.user = ["ubuntui"]
 
 
 def do_deploy(archive_path):
     """Function that distributes the archive package"""
+    if not path.exists(archive_path):
+        return False
     try:
         filename_ext = archive_path.split("/")[-1]
         filename = filename_ext.split(".")[0]
@@ -21,7 +24,7 @@ def do_deploy(archive_path):
         run(f"mv {path_fn}/web_static/* {path_fn}")
         run(f"rm -rf {path_fn}/web_static")
         run(f"rm -rf /data/web_static/current")
-        #run(f"ln -s {path_fn}/ /data/web_static/current")
+        # run(f"ln -s {path_fn}/ /data/web_static/current")
         symlink(f"ln -s {path_fn}/ /data/web_static/current")
         return True
     except Exception:
