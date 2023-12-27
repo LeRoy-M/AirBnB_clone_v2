@@ -5,7 +5,6 @@ archived package to the web servers, using `Fabric`
 from fabric.api import env, put, run
 from os import path, symlink
 env.hosts = ["54.236.43.83", "54.164.92.21"]
-env.user = "ubuntu"
 
 
 def do_deploy(archive_path):
