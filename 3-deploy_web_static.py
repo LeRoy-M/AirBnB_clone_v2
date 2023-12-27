@@ -2,11 +2,20 @@
 """Module (based on the file `2-do_deploy_web_static.py`) that creates and
 distributes the archived package to the web servers, using `Fabric`
 """
-from AirBnB_clone_v2/1-pack_web_static import do_pack
 from fabric.api import env, put, run
 from os import path, symlink
 env.hosts = ["54.236.43.83", "54.164.92.21"]
 
+
+def do_pack():
+    """Function that generates a `.tgz` archive"""
+    date_t = datetime.now().strftime("%Y%m%d%H%M%S")
+    local("mkdir -p versions")
+    filename = f"versions/web_static_{date_t}.tgz"
+    local(f"tar -cvzf {filename} web_static")
+    if filename:
+        return filename
+    return None
 
 def deploy():
     """Function that creates and distributes the archive package"""
