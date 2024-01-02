@@ -17,7 +17,7 @@ def hello():
 @app.route("/hbnb")
 def hbnb():
     """Routes to hbnb page"""
-    return "HBNB!"
+    return "HBNB"
 
 
 @app.route("/c/<text>")
