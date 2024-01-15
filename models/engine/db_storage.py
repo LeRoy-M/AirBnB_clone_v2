@@ -2,13 +2,13 @@
 """Module that defines the `DBStorage` class"""
 
 import models
-from models.base_model import BaseModel, Base
-from models import amenity.Amenity, city.City, place.Place, review.Review,
-state.State, user.User
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from os import getenv
+from models.base_model import BaseModel, Base
+from models import amenity.Amenity, city.City, place.Place, review.Review,
+state.State, user.User
 
 classes = {"Amenity": Amenity, "City": City, "Place": Place, "Review": Review,
            "State": State, "User": User}
@@ -26,9 +26,11 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv("HBNB_MYSQL_HOST")
         HBNB_MYSQL_DB = getenv("HBNB_MYSQL_DB")
         HBNB_ENV = getenv("HBNB_ENV")
-        self.__engine = create_engine(f"mysql+mysqldb://{HBNB_MYSQL_USER}:
-                                      {HBNB_MYSQL_PWD}@{HBNB_MYSQL_DB}/
-                                      {HBNB_ENV}")
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
+                                      format(HBNB_MYSQL_USER,
+                                             HBNB_MYSQL_PWD,
+                                             HBNB_MYSQL_HOST,
+                                             HBNB_MYSQL_DB))
 
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
@@ -60,7 +62,8 @@ class DBStorage:
         def reload(self):
             """Method creates all tables in the DB and the current session"""
             Base.metadata.create_all(self.__engine)
-            sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+            sess_factory = sessionmaker(bind=self.__engine,
+                                        expire_on_commit=False)
             Session = scoped_session(sess_factory)
             self.__session = Session
 

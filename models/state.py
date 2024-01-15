@@ -26,7 +26,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """Method that gets list of city instances related to state"""
-            list_city =[]
+            list_city = []
             cities = models.storage.all(City)
             for city in cities.values():
                 if city.state_id == self.id:
